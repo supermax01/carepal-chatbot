@@ -24,7 +24,7 @@ Before running this app, you need to:
 1. Clone this repository:
 
 ```bash
-
+https://github.com/supermax01/carepal-chatbot.git
 ```
 
 2. Navigate to the project directory:
