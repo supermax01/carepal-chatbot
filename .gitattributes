@@ -1,5 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Mark all files in the lib directory as Dart
+lib/** linguist-language=Dart
+
+# If you have an ios directory with Objective-C files, exclude it from language statistics
+ios/** linguist-vendored
 
 # Declare files that will always have Dart line endings
 *.dart linguist-language=Dart
