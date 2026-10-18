@@ -1,82 +1,71 @@
-# Carepal Liver Cirrhosis Chatbot
+# Carepal Chatbot — Gemini-powered assistant for liver-cirrhosis patients
 
-## Overview
+[![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
+[![Gemini](https://img.shields.io/badge/Google%20Gemini-1.5%20Flash%20%2F%201.0%20Pro-4285F4?logo=google&logoColor=white)](https://ai.google.dev)
+[![Hive](https://img.shields.io/badge/Hive-on--device%20storage-FFC107)](https://pub.dev/packages/hive)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-This Flutter-based chatbot is a component of the Carepal app, specifically designed to assist patients with liver cirrhosis. The chatbot utilizes Google's Gemini AI, which is being fine-tuned to understand and respond to queries related to liver cirrhosis data and patient questions.
+> **Status:** 2024 prototype, the first component of the [Carepal](https://github.com/supermax01/Carepal) project
+> (finalist, [2024 AMIA/HL7 FHIR App Competition](https://amia.org/education-events/amia-2024-annual-symposium/fhir-app)).
+> The assistant later moved into the main Carepal app with a stricter safety prompt and secure key storage.
+> Not a medical device; not for clinical use.
 
-## Features
+## What it does
 
-- Personalized responses to patient queries about liver cirrhosis
-- Ability to summarize clinical notes from MIMIC database
-- User-friendly interface for easy interaction
-- Support for both text and image inputs
-- Chat history storage for continuity of care using flutter Hive database
+- **Conversational assistant** for questions about living with liver cirrhosis, built on Google Gemini
+  (`gemini-1.5-flash` and `gemini-1.0-pro` through the `google_generative_ai` SDK), using a model tuned in
+  Google AI Studio on cirrhosis-related material.
+- **Multimodal input**: text plus images (`image_picker`), rendered with Markdown.
+- **Clinical-note summarization**: paste a de-identified note (for example from MIMIC) and get a structured summary.
+- **Persistent chat history and settings** on-device with Hive; `provider` for state management; no server.
 
-## Prerequisites
+## Screenshots
 
-Before running this app, you need to:
+<p align="center">
+  <img src="docs/screenshots/01.png" width="190" alt="Screenshot 1">
+  <img src="docs/screenshots/02.png" width="190" alt="Screenshot 2">
+  <img src="docs/screenshots/03.png" width="190" alt="Screenshot 3">
+  <img src="docs/screenshots/04.png" width="190" alt="Screenshot 4">
+</p>
 
-1. Have Flutter installed on your development machine
-2. Obtain a Gemini API key from Google AI Studio
-
-## Setup
-
-1. Clone this repository:
-
-```bash
-https://github.com/supermax01/carepal-chatbot.git
-```
-
-2. Navigate to the project directory:
-
-```bash
-cd carepal-liver-cirrhosis-chatbot
-```
-3. Install dependencies:
+## Run it
 
 ```bash
+git clone https://github.com/supermax01/carepal-chatbot.git
+cd carepal-chatbot
 flutter pub get
 ```
-4. Set up your Gemini API key:
 
-- Open `lib/api/api_service.dart`
-- Replace `YOUR_ACTUAL_API_KEY_HERE` with your Gemini API key:
-  ```dart
-  class ApiService {
-    static const apiKey = 'YOUR_ACTUAL_API_KEY_HERE';
-  }
-  ```
+Get a Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey) and set it in
+`lib/api/api_service.dart` (replace `'your api key'`). This prototype keeps the key in a constant for local testing
+only; never commit a real key. The main Carepal app reads keys from `.env` and platform secure storage instead.
 
-5. Run the app:
 ```bash
 flutter run
 ```
 
-## Usage
+## Project layout
 
-- Launch the app and start a new chat session
-- Type your questions about liver cirrhosis or upload relevant images
-- Receive AI-generated responses based on the latest medical knowledge and your personal data
-- The current gemini 1.5 pro model is also really good in summarizing clinical notes. you can try by posting a sample clinical note from mimic datasets.
+```
+lib/
+├── main.dart
+├── api/api_service.dart      # Gemini API key holder (placeholder)
+├── providers/                # chat and settings state (provider)
+├── hive/                     # chat history, user, and settings boxes
+├── models/                   # message model
+├── screens/                  # home, chat, chat history, profile
+├── widgets/                  # message bubbles, image previews, input field
+└── themes/                   # app theme
+```
 
-## AI Model Information
+## Related repositories
 
-The chatbot uses a Gemini AI model fine-tuned in Google AI Studio to better understand liver cirrhosis data and patient questions. It has demonstrated proficiency in summarizing clinical notes from the MIMIC (Medical Information Mart for Intensive Care) database.
+| Repo | Role in the project |
+|---|---|
+| [Carepal](https://github.com/supermax01/Carepal) | Main app: Gemini assistant, PROMIS-29 outcomes to REDCap, care-management screens |
+| [hapi_flutter](https://github.com/supermax01/hapi_flutter) | FHIR `Patient/$everything` demo against a HAPI FHIR server |
+| [carepal-emr](https://github.com/supermax01/carepal-emr) | OpenEMR SMART-on-FHIR client (OAuth 2.0 + PKCE) with a FastAPI proxy |
 
-## Note for Developers
+## License
 
-This chatbot is currently in development and will be integrated into the larger Carepal app ecosystem. Future updates will include more specialized features for liver cirrhosis management and broader health monitoring capabilities.
-
-## Getting a Gemini API Key
-
-To run this app, you need to obtain a Gemini API key from Google AI Studio:
-
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Sign in with your Google account
-3. Create a new API key
-4. Use this key in the `ApiService` class as mentioned in the Setup section
-
-## Screenshots
-![alt text](<Screenshot 2024-09-30 at 9.36.43 PM.png>) ![alt text](<Screenshot 2024-09-30 at 9.36.52 PM.png>) ![alt text](<Screenshot 2024-09-30 at 9.37.02 PM.png>) ![alt text](<Screenshot 2024-09-30 at 9.37.41 PM.png>)
-
-
+MIT — see [LICENSE](LICENSE).
